@@ -5,10 +5,12 @@ type Direction = "forward" | "up" | "down";
 class Location {
   public distance: number;
   public depth: number;
+  public aim: number;
 
-  constructor(distance: number, depth: number) {
+  constructor(distance = 0, depth = 0, aim = 0) {
     this.distance = distance;
     this.depth = depth;
+    this.aim = aim;
   }
 }
 
@@ -33,17 +35,18 @@ const { distance, depth } = readFileSync("./resources/input.txt", "utf-8")
     switch (move.direction) {
       case "forward":
         loc.distance += move.distance;
+        loc.depth += loc.aim * move.distance;
         break;
       case "up":
-        loc.depth -= move.distance;
+        loc.aim -= move.distance;
         break;
       case "down":
-        loc.depth += move.distance;
+        loc.aim += move.distance;
         break;
       default:
         throw Error("unknown direction");
     }
     return loc;
-  }, new Location(0, 0));
+  }, new Location());
 
 console.log(`distance: ${distance}, depth: ${depth}, answer: ${distance * depth}`);
