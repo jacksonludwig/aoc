@@ -21,8 +21,8 @@ for (let i = 0; i < digits; i++) {
 }
 
 const gamma = parseInt(gammaRate.join(""), 2);
-const epsilon = gamma ^ (Math.pow(2, digits) - 1);
+const epsilon = gamma ^ (Math.pow(2, digits) - 1); // XOR with 111111... (len of digits)
 
 console.log(`Gamma: ${gamma}`);
-console.log(`Epsilon: ${epsilon}`); // invert bits to get epsilon
+console.log(`Epsilon: ${epsilon}`);
 console.log(`Answer: ${gamma * epsilon}`);
