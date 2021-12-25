@@ -16,7 +16,7 @@ class Board:
 def chunk(lines: list[str], chunk_size: int):
     for i in range(0, len(lines), chunk_size + 1):
         yield [
-            line.strip().replace("  ", " ")
+            " ".join(line.strip().split())
             for line in lines[i : i + chunk_size + 1]
             if line != "\n"
         ]
