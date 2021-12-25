@@ -22,7 +22,7 @@ const readInput = (file: string): BingoData => {
 
   for (let i = 0; i < data.length; i += BOARD_SIZE) {
     const boardChunk = data.slice(i, i + BOARD_SIZE);
-    const board: number[][] = [];
+    const board: Board = [];
 
     boardChunk.forEach((line) =>
       board.push(
