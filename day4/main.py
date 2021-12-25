@@ -1,3 +1,5 @@
+from functools import reduce
+
 BoardType = list[list[int]]
 
 
@@ -5,10 +7,26 @@ class Board:
     def __init__(self, board: BoardType):
         self.sets = get_winning_nums(board, 5)
 
+    def do_move(self, move: int):
+        """Take move and return true if bingo is achieved"""
+        for i in range(0, len(self.sets)):
+            try:
+                self.sets[i].remove(move)
+            except:
+                pass
+            if len(self.sets[i]) == 0:
+                return True
+        return False
+
+    def sum_remaining(self) -> int:
+        flat_list = [num for row in self.sets for num in row]
+        return reduce(lambda acc, cur: acc + cur, set(flat_list), 0)
+
     def __str__(self):
         res = ""
         for s in self.sets:
-            res += str(s)
+            for num in s:
+                res += " " + str(num)
             res += "\n"
         return res
 
@@ -53,6 +71,18 @@ def get_winning_nums(board: BoardType, chunk_size: int) -> list[set[int]]:
     return winning_nums
 
 
+def find_final_number_and_board(winning_nums: list[int], boards: list[Board]):
+    for num in winning_nums:
+        for board in boards:
+            if board.do_move(num):
+                return num, board
+    raise Exception("no winner")
+
+
 drawn_nums, boards = read_input("resources/input.txt", 5)
 
-print(boards[0])
+final_num, board = find_final_number_and_board(drawn_nums, boards)
+
+print(final_num)
+print(board)
+print(board.sum_remaining() * final_num)
