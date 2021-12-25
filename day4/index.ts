@@ -1,7 +1,9 @@
 import { readFileSync } from "fs";
 
+type Board = number[][];
+
 type BingoData = {
-  boards: number[][][];
+  boards: Board[];
   drawnNumbers: number[];
 };
 
@@ -14,7 +16,7 @@ const readInput = (file: string): BingoData => {
 
   const drawnNumbers = data[0].split(",").map((n) => parseInt(n));
 
-  const boards: number[][][] = [];
+  const boards: Board[] = [];
 
   data = data.slice(1);
 
