@@ -79,10 +79,30 @@ def find_final_number_and_board(winning_nums: list[int], boards: list[Board]):
     raise Exception("no winner")
 
 
+def find_last(winning_nums: list[int], boards: list[Board]) -> int:
+    last_res = 0
+    for num in winning_nums:
+        to_remove: list[int] = []
+
+        for i, board in enumerate(boards):
+            if board.do_move(num):
+                last_res = num * board.sum_remaining()
+                to_remove.append(i)
+
+        to_remove.reverse()
+        for j in to_remove:
+            del boards[j]
+
+    return last_res
+
+
+
 drawn_nums, boards = read_input("resources/input.txt", 5)
 
-final_num, board = find_final_number_and_board(drawn_nums, boards)
+# final_num, board = find_final_number_and_board(drawn_nums, boards)
+#
+# print(final_num)
+# print(board)
+# print(board.sum_remaining() * final_num)
 
-print(final_num)
-print(board)
-print(board.sum_remaining() * final_num)
+print(find_last(drawn_nums, boards))
