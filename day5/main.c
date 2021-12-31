@@ -3,13 +3,11 @@
 #include <string.h>
 
 typedef struct Position {
-  unsigned int x;
-  unsigned int y;
+  unsigned int x, y;
 } Position;
 
 typedef struct Line {
-  Position start;
-  Position end;
+  Position start, end;
 } Line;
 
 Line parse_single_line(char *line) {
@@ -73,8 +71,6 @@ void process_lines(char **lines, unsigned int amount_of_lines) {
 }
 
 int main() {
-  char example_line[] = "516,589 -> 970,823";
-
   unsigned int amount_of_lines = 0;
   char **lines = read_input("resources/input.txt", &amount_of_lines);
 
