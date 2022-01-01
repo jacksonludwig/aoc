@@ -1,7 +1,7 @@
+#include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glib.h>
 
 typedef struct Position {
   unsigned int x, y;
@@ -32,9 +32,29 @@ Line parse_single_line(char *line) {
   return parsed_line;
 }
 
+char *string_line_rep(Line *line) {
+  char *str_line = (char *)malloc(1000 * sizeof(char));
+
+  sprintf("Start: %d, %d\nEnd: %d, %d\n", str_line, line->start.x,
+          line->start.y, line->end.x, line->end.y);
+
+  return str_line;
+}
+
 void print_line(Line *line) {
   printf("Start: %d, %d\n", line->start.x, line->start.y);
   printf("End: %d, %d\n", line->end.x, line->end.y);
+}
+
+void process_lines(char **lines, unsigned int amount_of_lines) {
+  GHashTable *counts = g_hash_table_new(g_str_hash, g_str_equal);
+
+  for (int i = 0; i < amount_of_lines; i++) {
+    g_hash_table_insert(counts, lines[i], "1");
+
+    Line line = parse_single_line(lines[i]);
+    print_line(&line);
+  }
 }
 
 char **read_input(char *filename, unsigned int *line_amount) {
@@ -66,13 +86,6 @@ char **read_input(char *filename, unsigned int *line_amount) {
 
   *line_amount = index;
   return lines;
-}
-
-void process_lines(char **lines, unsigned int amount_of_lines) {
-  for (int i = 0; i < amount_of_lines; i++) {
-    Line line = parse_single_line(lines[i]);
-    print_line(&line);
-  }
 }
 
 int main() {
