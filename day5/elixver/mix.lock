@@ -1,0 +1,4 @@
+%{
+  "fs": {:git, "https://github.com/synrc/fs", "936ba9dcf88186250ecc5995e25154bde44252a1", [tag: "6.1"]},
+  "sync": {:git, "https://github.com/rustyio/sync.git", "ba627f60704cc291a5c2940d1c79ff24a3249a0c", [tag: "master"]},
+}
